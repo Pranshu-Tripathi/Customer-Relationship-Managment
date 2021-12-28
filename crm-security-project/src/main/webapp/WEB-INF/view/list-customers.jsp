@@ -45,6 +45,16 @@
 				/>
 			
 			</security:authorize>
+			
+			<!-- add a search box -->
+			
+			<form:form action="search" method = "GET">
+			
+				Search Customer : <input type="text" name = "theSearchName"/>
+				
+				<input type ="submit" value = "Search" class = "add-button"/>
+			
+			</form:form>
 	
 	
 			
