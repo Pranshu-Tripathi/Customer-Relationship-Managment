@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pranshu.crm.springdemo.entity.Customer;
+import com.pranshu.crm.springdemo.utils.SortUtils;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
@@ -19,13 +20,22 @@ public class CustomerDAOImpl implements CustomerDAO {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public List<Customer> getCustomers() {
+	public List<Customer> getCustomers(int sortId) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		// create a query ... sort by last name
 		
+		String sortType = null;
+		if(sortId == SortUtils.FIRST_NAME) {
+			sortType = "firstName";
+		}else if(sortId == SortUtils.LAST_NAME) {
+			sortType = "lastName";
+		}else {
+			sortType = "email";
+		}
+		
+		// create a query ... sort by required filter
 		Query<Customer> theQuery = 
-				currentSession.createQuery("from Customer order by lastName", Customer.class);
+				currentSession.createQuery("from Customer order by "+ sortType, Customer.class);
 		
 		// execute the query
 		List<Customer> customers = theQuery.getResultList();

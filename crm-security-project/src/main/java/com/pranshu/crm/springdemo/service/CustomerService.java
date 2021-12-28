@@ -6,7 +6,7 @@ import com.pranshu.crm.springdemo.entity.Customer;
 
 public interface CustomerService {
 
-	public List<Customer> getCustomers();
+	public List<Customer> getCustomers(int sortId);
 	
 	public void saveCustomer(Customer theCustomer);
 	

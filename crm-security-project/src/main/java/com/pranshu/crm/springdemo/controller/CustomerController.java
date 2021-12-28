@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pranshu.crm.springdemo.entity.Customer;
 import com.pranshu.crm.springdemo.service.CustomerService;
+import com.pranshu.crm.springdemo.utils.SortUtils;
 
 @Controller
 @RequestMapping("/customer")
@@ -23,10 +24,16 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping("/list")
-	public String listCustomers(Model theModel) {
+	public String listCustomers(@RequestParam(required = false) String sort,Model theModel) {
+		
+		int sortId = SortUtils.FIRST_NAME;
+		
+		if(sort != null) {
+			sortId = Integer.parseInt(sort);
+		}
 		
 		// get customers from the service
-		List<Customer> theCustomers = customerService.getCustomers();
+		List<Customer> theCustomers = customerService.getCustomers(sortId);
 		
 		// add the customers to the model
 		theModel.addAttribute("customers", theCustomers);

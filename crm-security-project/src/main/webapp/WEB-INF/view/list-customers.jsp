@@ -1,3 +1,4 @@
+<%@page import="com.pranshu.crm.springdemo.utils.SortUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -45,14 +46,27 @@
 			
 			</security:authorize>
 	
+	
+			
+			<!-- Add variables for sorting filters -->
+			
+			<c:url var="sortLinkFirstName" value = "/customer/list">
+				<c:param name="sort" value = "<%= Integer.toString(SortUtils.FIRST_NAME) %>"/>
+			</c:url>
+			<c:url var="sortLinkLastName" value = "/customer/list">
+				<c:param name="sort" value = "<%= Integer.toString(SortUtils.LAST_NAME) %>"/>
+			</c:url>
+			<c:url var="sortLinkEmail" value = "/customer/list">
+				<c:param name="sort" value = "<%= Integer.toString(SortUtils.EMAIL) %>"/>
+			</c:url>
 		
 			<!--  add our html table here -->
 		
 			<table>
 				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
+					<th><a href="${sortLinkFirstName}">First Name</a></th>
+					<th><a href="${sortLinkLastName}">Last Name</a></th>
+					<th><a href="${sortLinkEmail}">Email</a></th>
 					
 					<%-- Only show "Action" column for managers or admin --%>
 					<security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
